@@ -11,7 +11,7 @@
 #
 # Happy Coding!
 
-service: get-products
+service: getProduct
 
 
 plugins:
@@ -22,7 +22,7 @@ plugins:
 # Check out our docs for more details
 # frameworkVersion: "=X.X.X"
 custom:
-  bucket: shopify-json
+  bucket: shopify-json-store
   webpack:
     webpackConfig: ./webpack.config.js
     includeModules: true
@@ -32,7 +32,7 @@ provider:
   runtime: nodejs8.10
 
 # you can overwrite defaults here
-#  stage: dev
+  stage: prod
 #  region: us-east-1
 
 # you can add statements to the Lambda function's IAM Role here
@@ -60,14 +60,14 @@ provider:
 #    - exclude-me-dir/**
 
 functions:
-  hello:
+  getProduct:
     handler: handler.getProducts
     environment:
       BUCKET: ${self:custom.bucket}
       SHOPIFY_ACCESS_TOKEN: ${ssm:SHOPIFY_ACCESS_TOKEN}
     events:
       - http:
-          path: get-products/{id}
+          path: products/{id}
           method: GET
           request:
             parameters:
